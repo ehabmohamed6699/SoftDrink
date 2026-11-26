@@ -59,3 +59,28 @@ Clean Architecture with four projects plus tests:
 ```bash
 dotnet test
 ```
+
+## Running the API
+
+### Prerequisites — configure the connection string (User Secrets)
+
+From the `src/Billing.Api` directory:
+
+```bash
+dotnet user-secrets init
+dotnet user-secrets set "ConnectionStrings:Default" "Server=...;Database=Billing;Trusted_Connection=True;TrustServerCertificate=True;"
+```
+
+### Launch profiles
+
+From the repository root:
+
+```bash
+# HTTP only
+dotnet run --project src/Billing.Api
+
+# HTTPS (uses the https launch profile)
+dotnet run --project src/Billing.Api --launch-profile https
+```
+
+OpenAPI is available in Development at the URLs printed by `dotnet run`.
