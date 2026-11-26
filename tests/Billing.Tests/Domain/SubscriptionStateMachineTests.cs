@@ -32,6 +32,14 @@ public class SubscriptionStateMachineTests
     }
 
     [Fact]
+    public void TransitionTo_Valid_Works()
+    {
+        var sub = new Subscription { Status = SubscriptionStatus.Trial };
+        sub.TransitionTo(SubscriptionStatus.Active);
+        Assert.Equal(SubscriptionStatus.Active, sub.Status);
+    }
+
+    [Fact]
     public void TransitionTo_Invalid_Throws()
     {
         var sub = new Subscription { Status = SubscriptionStatus.Expired };

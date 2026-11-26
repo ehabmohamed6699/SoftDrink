@@ -20,6 +20,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Billing.Domain\Billing.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Billing.Application\Billing.Application.csproj" />
+    <ProjectReference Include="..\..\src\Billing.Infrastructure\Billing.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Billing.Api\Billing.Api.csproj" />
   </ItemGroup>
 
 </Project>

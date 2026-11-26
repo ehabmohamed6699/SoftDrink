@@ -57,6 +57,54 @@ public class ProrationCalculatorTests
     }
 
     [Fact]
+    public void Precise_Upgrade_HalfPeriod()
+    {
+        var oldP = Plan(100m, 1000m);
+        var newP = Plan(200m, 2000m);
+        var start = new DateTime(2026, 1, 1);
+        var end = new DateTime(2026, 1, 31); // 30 days
+        var change = new DateTime(2026, 1, 16); // 15 days remainder
+        var net = ProrationCalculator.Compute(oldP, newP, BillingCycle.Monthly, start, end, change);
+        Assert.Equal(50.00m, net);
+    }
+
+    [Fact]
+    public void Precise_Downgrade_HalfPeriod()
+    {
+        var oldP = Plan(200m, 2000m);
+        var newP = Plan(100m, 1000m);
+        var start = new DateTime(2026, 1, 1);
+        var end = new DateTime(2026, 1, 31);
+        var change = new DateTime(2026, 1, 16);
+        var net = ProrationCalculator.Compute(oldP, newP, BillingCycle.Monthly, start, end, change);
+        Assert.Equal(-50.00m, net);
+    }
+
+    [Fact]
+    public void Precise_Rounding_To2Decimals()
+    {
+        var oldP = Plan(10m, 100m);
+        var newP = Plan(20m, 200m);
+        var start = new DateTime(2026, 1, 1);
+        var end = new DateTime(2026, 1, 4); // 3 days
+        var change = new DateTime(2026, 1, 2); // 2 days remainder
+        var net = ProrationCalculator.Compute(oldP, newP, BillingCycle.Monthly, start, end, change);
+        Assert.Equal(6.67m, net);
+    }
+
+    [Fact]
+    public void Precise_FullPeriodDifference()
+    {
+        var oldP = Plan(10m, 100m);
+        var newP = Plan(25m, 250m);
+        var start = new DateTime(2026, 1, 1);
+        var end = new DateTime(2026, 2, 1); // 31 days
+        var change = new DateTime(2026, 1, 1); // full remainder
+        var net = ProrationCalculator.Compute(oldP, newP, BillingCycle.Monthly, start, end, change);
+        Assert.Equal(15.00m, net);
+    }
+
+    [Fact]
     public void AnnualCycle_Works()
     {
         var oldP = Plan(10m, 100m);
